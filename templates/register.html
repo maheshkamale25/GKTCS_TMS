@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | eLMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .register-container {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #4a69bd;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.55rem 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #4a69bd;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3b57a0;
+        }
+
+        .alert {
+            margin-top: 1rem;
+        }
+
+        .text-center a {
+            color: #4a69bd;
+            font-weight: 500;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Create Your GKTCS Account</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.role.id_for_label }}">Register As</label>
+            {{ form.role }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.user_id.id_for_label }}">ID</label>
+            {{ form.user_id }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">Name</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.department.id_for_label }}">Department</label>
+            {{ form.department }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.confirm_password.id_for_label }}">Confirm Password</label>
+            {{ form.confirm_password }}
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="alert alert-danger">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <p>Already have an account? <a href="{% url 'std_login' %}">Sign in</a></p>
+    </div>
+</div>
+
+</body>
+</html>
